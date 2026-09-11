@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS registrations (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
+  national_id TEXT NOT NULL,
   college TEXT NOT NULL,
   phone TEXT NOT NULL,
   talent TEXT NOT NULL,

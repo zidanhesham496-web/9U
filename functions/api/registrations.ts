@@ -3,6 +3,7 @@ import type { Env, PagesContext } from "../_shared/types";
 
 type RegistrationBody = {
   name?: unknown;
+  nationalId?: unknown;
   college?: unknown;
   phone?: unknown;
   talent?: unknown;
@@ -11,6 +12,7 @@ type RegistrationBody = {
 type RegistrationRow = {
   id: string;
   name: string;
+  national_id: string;
   college: string;
   phone: string;
   talent: string;
@@ -32,12 +34,22 @@ function jsonResponse(request: Request, env: Env, body: unknown, status = 200) {
 
 function validateBody(body: RegistrationBody) {
   const name = typeof body.name === "string" ? body.name.trim() : "";
+  const nationalId = typeof body.nationalId === "string" ? body.nationalId.trim() : "";
   const college = typeof body.college === "string" ? body.college.trim() : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const talent = typeof body.talent === "string" ? body.talent : "";
   const phoneDigits = phone.replace(/\D/g, "");
 
-  if (!name || name.length > 120 || !college || college.length > 160 || !talent || !allowedTalents.has(talent)) {
+  if (
+    !name ||
+    name.length > 120 ||
+    !nationalId ||
+    !/^[23][0-9]{13}$/.test(nationalId) ||
+    !college ||
+    college.length > 160 ||
+    !talent ||
+    !allowedTalents.has(talent)
+  ) {
     return null;
   }
 
@@ -45,13 +57,14 @@ function validateBody(body: RegistrationBody) {
     return null;
   }
 
-  return { name, college, phone, talent };
+  return { name, nationalId, college, phone, talent };
 }
 
 function toRecord(row: RegistrationRow) {
   return {
     id: row.id,
     name: row.name,
+    nationalId: row.national_id,
     college: row.college,
     phone: row.phone,
     talent: row.talent,
@@ -74,7 +87,7 @@ export async function onRequestGet(context: PagesContext) {
 
   try {
     const result = await env.DB.prepare(
-      "SELECT id, name, college, phone, talent, created_at FROM registrations ORDER BY created_at DESC",
+      "SELECT id, name, national_id, college, phone, talent, created_at FROM registrations ORDER BY created_at DESC",
     ).all<RegistrationRow>();
     return jsonResponse(request, env, result.results.map(toRecord));
   } catch (error) {
@@ -102,10 +115,10 @@ export async function onRequestPost(context: PagesContext) {
       createdAt: new Date().toISOString(),
     };
     await env.DB.prepare(
-      "INSERT INTO registrations (id, name, college, phone, talent, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-    ).bind(record.id, record.name, record.college, record.phone, record.talent, record.createdAt).run();
+      "INSERT INTO registrations (id, name, national_id, college, phone, talent, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    ).bind(record.id, record.name, record.nationalId, record.college, record.phone, record.talent, record.createdAt).run();
 
-    return jsonResponse(request, env, record, 201);
+    return jsonResponse(request, env, { id: record.id, createdAt: record.createdAt }, 201);
   } catch (error) {
     console.error("Failed to save registration", error);
     return jsonResponse(request, env, { error: "Unable to save registration" }, 500);

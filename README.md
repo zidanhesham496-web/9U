@@ -64,7 +64,7 @@ git remote add origin https://github.com/<your-account>/<your-repository>.git
 git push -u origin main
 ```
 
-3. Create a D1 database in Cloudflare named `talent-registration`. Apply `migrations/0001_create_registrations.sql` with Wrangler or the D1 dashboard, then set its ID in `wrangler.toml` if using Wrangler deployments.
+3. Create a D1 database in Cloudflare named `talent-registration`. Apply `migrations/0001_create_registrations.sql` and then `migrations/0002_add_national_id.sql` with Wrangler or the D1 dashboard, then set its ID in `wrangler.toml` if using Wrangler deployments.
 4. In Cloudflare Pages, choose **Create a project**, connect the GitHub repository, and use these settings:
 	- Build command: `npm run build`
 	- Output directory: `dist`
@@ -73,7 +73,7 @@ git push -u origin main
 
 ### Database schema
 
-The `registrations` table contains `id` (TEXT primary key), `name`, `college`, `phone`, `talent`, and `created_at` (all required TEXT values). Indexes support newest-first dashboard loading and talent filtering. The schema is in `migrations/0001_create_registrations.sql`.
+The `registrations` table contains `id` (TEXT primary key), `name`, `national_id`, `college`, `phone`, `talent`, and `created_at` (all required TEXT values). Indexes support newest-first dashboard loading and talent filtering. The initial schema is in `migrations/0001_create_registrations.sql`; existing databases must also apply `migrations/0002_add_national_id.sql`.
 
 ### API
 
@@ -82,7 +82,7 @@ The `registrations` table contains `id` (TEXT primary key), `name`, `college`, `
 - `POST /api/admin/login` validates server-only credentials and sets an HttpOnly signed cookie.
 - `GET /api/admin/session` checks the signed admin cookie.
 
-The registration form calls `services/registrationService.ts`; the admin dashboard calls the same service for centralized data; the existing CSV/Excel-compatible export consumes that retrieved list. No browser storage is used as the production source of truth.
+The registration form calls `services/registrationService.ts`; the admin dashboard calls the same service for centralized data; the existing CSV/Excel-compatible export consumes that retrieved list, including the national ID. The print view uses the same protected admin table. No browser storage is used as the production source of truth.
 
 ## Implementation report
 

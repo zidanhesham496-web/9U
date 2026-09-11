@@ -9,6 +9,7 @@ import { registerTalent } from "@/services/registrationService";
 
 type FormValues = {
   fullName: string;
+  nationalId: string;
   college: string;
   phone: string;
   talent: string;
@@ -27,6 +28,7 @@ const talentOptions: SelectOption[] = [
 
 const initialValues: FormValues = {
   fullName: "",
+  nationalId: "",
   college: "",
   phone: "",
   talent: "",
@@ -38,6 +40,12 @@ function validate(values: FormValues): FormErrors {
 
   if (!values.fullName.trim()) {
     errors.fullName = "يرجى إدخال الاسم الكامل.";
+  }
+
+  if (!values.nationalId.trim()) {
+    errors.nationalId = "يرجى إدخال الرقم القومي.";
+  } else if (!/^[23][0-9]{13}$/.test(values.nationalId.trim())) {
+    errors.nationalId = "يرجى إدخال رقم قومي صحيح مكون من 14 رقمًا.";
   }
 
   if (!values.college.trim()) {
@@ -80,14 +88,14 @@ export function RegistrationForm() {
       setIsSaving(true);
 
       try {
-        const savedRecord = await registerTalent({
+        await registerTalent({
           name: values.fullName,
+          nationalId: values.nationalId,
           college: values.college,
           phone: values.phone,
           talent: values.talent,
         });
 
-        console.log(savedRecord);
         setIsSubmitted(true);
       } catch {
         setSubmissionError("تعذر حفظ التسجيل. يرجى المحاولة مرة أخرى.");
@@ -114,6 +122,16 @@ export function RegistrationForm() {
             value={values.fullName}
             error={errors.fullName}
             onChange={(event) => updateField("fullName", event.target.value)}
+          />
+          <Input
+            label="الرقم القومي"
+            name="nationalId"
+            inputMode="numeric"
+            autoComplete="off"
+            required
+            value={values.nationalId}
+            error={errors.nationalId}
+            onChange={(event) => updateField("nationalId", event.target.value)}
           />
           <Input
             label="الكلية أو التخصص"

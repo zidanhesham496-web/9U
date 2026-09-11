@@ -194,6 +194,7 @@ export function AdminDashboard() {
               <thead>
                 <tr>
                   <th scope="col">الاسم</th>
+                  <th scope="col">الرقم القومي</th>
                   <th scope="col">الكلية أو التخصص</th>
                   <th scope="col">رقم الهاتف</th>
                   <th scope="col">الموهبة</th>
@@ -204,6 +205,7 @@ export function AdminDashboard() {
                 {visibleRegistrations.map((registration) => (
                   <tr key={registration.id}>
                     <td data-label="الاسم">{registration.name}</td>
+                    <td data-label="الرقم القومي">{registration.nationalId}</td>
                     <td data-label="الكلية أو التخصص">{registration.college}</td>
                     <td data-label="رقم الهاتف">{registration.phone}</td>
                     <td data-label="الموهبة"><span className="talent-pill">{getTalentLabel(registration.talent)}</span></td>

@@ -1,6 +1,6 @@
 import type { RegistrationRecord } from "@/services/registrationService";
 
-const exportHeaders = ["Name", "College", "Phone", "Talent", "Registration Time"];
+const exportHeaders = ["Name", "National ID", "College", "Phone", "Talent", "Registration Time"];
 
 const talentLabels: Record<string, string> = {
   singing: "Singing",
@@ -25,6 +25,7 @@ function escapeCsvValue(value: string) {
 export function createRegistrationsCsv(records: RegistrationRecord[]) {
   const rows = records.map((record) => [
     record.name,
+    record.nationalId,
     record.college,
     record.phone,
     talentLabels[record.talent] ?? record.talent,
