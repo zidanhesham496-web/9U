@@ -1,9 +1,0 @@
-name = "talent-registration"
-compatibility_date = "2026-09-11"
-pages_build_output_dir = "./dist"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "talent-registration"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
-migrations_dir = "migrations"

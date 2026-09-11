@@ -1,6 +1,6 @@
 # Talent Registration
 
-Cloudflare Pages application for theater talent registration. The UI remains a static Next.js export, while registration data is stored centrally in Cloudflare D1 through Pages Functions.
+Next.js application for theater talent registration, deployed on Vercel. Registration data is stored centrally in Supabase PostgreSQL through server-side Next.js Route Handlers.
 
 ## Setup
 
@@ -12,7 +12,7 @@ npm run build
 npm run dev
 ```
 
-Open `http://localhost:3000` for the public registration page or `http://localhost:3000/admin` for the admin dashboard. The Next.js dev server serves the UI only; use Wrangler Pages dev to exercise the Functions and D1 locally.
+Open `http://localhost:3000` for the public registration page or `http://localhost:3000/admin` for the admin dashboard. The Next.js dev server serves both the UI and API Route Handlers locally.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ Copy the template before local development when backend configuration is needed:
 cp .env.example .env.local
 ```
 
-`NEXT_PUBLIC_API_BASE_URL` should remain empty when the API is deployed as same-origin Pages Functions. `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `SESSION_SECRET` are server-only variables consumed by Functions and must never use the `NEXT_PUBLIC_` prefix. Configure them as encrypted Cloudflare Pages variables/secrets. For local Wrangler development, copy `.dev.vars.example` to `.dev.vars` and replace its placeholders; do not commit `.dev.vars`.
+`NEXT_PUBLIC_API_BASE_URL` should remain empty when the API is deployed as same-origin Vercel Route Handlers. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY` as server-only Vercel environment variables. They must never use the `NEXT_PUBLIC_` prefix. For local development, copy `.env.example` to `.env.local` and replace its placeholders; do not commit `.env.local`.
 
 ## Production checks
 
@@ -49,7 +49,7 @@ npm run lint
 npm run build
 ```
 
-The production build generates the public registration route `/` and the admin route `/admin/` as static App Router pages. Next.js writes its export to `out/`, then the build script copies that export to `dist/` for Cloudflare Pages. `trailingSlash` makes each route a directory with an `index.html`, which lets Cloudflare Pages serve direct navigation and refreshes without a server runtime. The API is deployed by Pages Functions from `functions/`.
+The production build generates the public and admin pages and deploys the dynamic API Route Handlers under `/api/` through Vercel. `output: "export"` is intentionally disabled because the API requires a Next.js server runtime.
 
 ## GitHub and Cloudflare Pages deployment
 
@@ -64,16 +64,14 @@ git remote add origin https://github.com/<your-account>/<your-repository>.git
 git push -u origin main
 ```
 
-3. Create a D1 database in Cloudflare named `talent-registration`. Apply `migrations/0001_create_registrations.sql` and then `migrations/0002_add_national_id.sql` with Wrangler or the D1 dashboard, then set its ID in `wrangler.toml` if using Wrangler deployments.
-4. In Cloudflare Pages, choose **Create a project**, connect the GitHub repository, and use these settings:
-	- Build command: `npm run build`
-	- Output directory: `dist`
-5. In Pages project settings, bind the D1 database to the Functions binding name `DB`. Add encrypted variables/secrets named `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `SESSION_SECRET`. Add `ALLOWED_ORIGIN` only if using a separate API origin; for same-origin Pages Functions it can be omitted.
+3. Create a Supabase project and run `supabase/migrations/0001_create_registrations.sql` in the Supabase SQL Editor.
+4. In Vercel project settings, add `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `SESSION_SECRET`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY` for Production, Preview, and Development as appropriate.
+5. Use `npm run build` as the Vercel build command. No output directory override is needed.
 6. Deploy. Future pushes to `main` will create production deployments automatically.
 
 ### Database schema
 
-The `registrations` table contains `id` (TEXT primary key), `name`, `national_id`, `college`, `phone`, `talent`, and `created_at` (all required TEXT values). Indexes support newest-first dashboard loading and talent filtering. The initial schema is in `migrations/0001_create_registrations.sql`; existing databases must also apply `migrations/0002_add_national_id.sql`.
+The Supabase `public.registrations` table contains `id` (UUID primary key), `name`, `national_id`, `college`, `phone`, `talent`, and `created_at` (required values). Indexes support newest-first dashboard loading and talent filtering. The schema is in `supabase/migrations/0001_create_registrations.sql`.
 
 ### API
 
