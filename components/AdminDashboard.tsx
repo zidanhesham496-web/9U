@@ -239,10 +239,18 @@ export function AdminDashboard() {
                       <button
                         className="admin-delete"
                         type="button"
+                        aria-label={`حذف تسجيل ${registration.name}`}
+                        title="حذف التسجيل"
                         disabled={deletingId === registration.id}
                         onClick={() => void handleDelete(registration)}
                       >
-                        {deletingId === registration.id ? "جارٍ الحذف..." : "حذف"}
+                        {deletingId === registration.id ? (
+                          <span className="admin-delete-loading" aria-hidden="true">...</span>
+                        ) : (
+                          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 7h16M10 11v6M14 11v6M6.5 7l.7 12h9.6l.7-12M9 7l1-3h4l1 3" />
+                          </svg>
+                        )}
                       </button>
                     </td>
                   </tr>

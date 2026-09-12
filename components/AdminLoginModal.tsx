@@ -47,6 +47,7 @@ export function AdminLoginModal({ open, onClose, onSuccess }: AdminLoginModalPro
         <button className="auth-modal-close" type="button" aria-label="إغلاق" onClick={onClose}>
           <span aria-hidden="true">×</span>
         </button>
+        <div className="auth-brand" aria-label="9U">9U</div>
         <p className="eyebrow">9U / دخول الإدارة</p>
         <h2 id="admin-login-title">مرحبًا بعودتك</h2>
         <p className="auth-modal-copy">أدخل بيانات الإدارة للوصول إلى التسجيلات.</p>
