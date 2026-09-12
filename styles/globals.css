@@ -167,16 +167,27 @@ body {
 }
 
 .auth-brand {
-  margin: 0.25rem 0 1rem;
+  margin: 0.1rem 0 0.55rem;
   color: #d9edff;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
-  font-size: clamp(2.6rem, 12vw, 3.8rem);
+  font-size: clamp(3.5rem, 18vw, 5.4rem);
   font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 0.9;
+  letter-spacing: 0.08em;
+  line-height: 0.82;
   text-align: center;
   text-shadow: 0 0 0.35rem rgba(217, 237, 255, 0.95),
-    0 0 1rem rgba(82, 164, 255, 0.86), 0 0 2.5rem rgba(91, 90, 255, 0.7);
+    0 0 1rem rgba(82, 164, 255, 0.95), 0 0 2.5rem rgba(91, 90, 255, 0.78),
+    0 0 4.5rem rgba(55, 132, 255, 0.38);
+}
+
+.auth-brand-subtitle {
+  margin: 0 0 0.8rem;
+  color: #8db9f2;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-align: center;
+  text-shadow: 0 0 0.8rem rgba(89, 155, 255, 0.55);
 }
 
 .auth-modal-copy {
