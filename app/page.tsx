@@ -33,7 +33,7 @@ export default function RegistrationPage() {
         <GlassCard className="registration-card relative z-10 w-full max-w-md">
           <div className="form-intro">
             <p className="eyebrow">NINU 2022</p>
-            <h1>تسجيل بيانات الطالب</h1>
+            <h1>9U</h1>
             <p>يرجى تعبئة البيانات التالية بدقة</p>
           </div>
           <RegistrationForm />
