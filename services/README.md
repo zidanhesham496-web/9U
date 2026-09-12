@@ -6,4 +6,4 @@ Place API clients and data-access functions here. Keep network and persistence l
 
 `POST /api/registrations` validates and stores public submissions in Supabase. `GET /api/registrations` requires the server-issued admin session cookie and returns records for the dashboard and CSV export. The API implementation lives in `app/api/registrations/route.ts`.
 
-`apiConfig.ts` exposes `getApiUrl(path)`, based on `NEXT_PUBLIC_API_BASE_URL`, for same-origin or separately hosted API routes. Keep private database credentials server-side and never expose them through `NEXT_PUBLIC_*` variables.
+`apiConfig.ts` exposes `getApiUrl(path)` for same-origin Next.js Route Handlers. Keep private database credentials server-side and never expose them through `NEXT_PUBLIC_*` variables.

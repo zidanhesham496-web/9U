@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { hasValidAdminSession } from "@/lib/adminSession";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
+export const runtime = "nodejs";
+
 type RegistrationBody = {
   name?: unknown;
   nationalId?: unknown;
@@ -56,7 +58,13 @@ export async function POST(request: Request) {
 
     const { data, error } = await getSupabaseAdmin()
       .from("registrations")
-      .insert(validated)
+      .insert({
+        name: validated.name,
+        national_id: validated.national_id,
+        college: validated.college,
+        phone: validated.phone,
+        talent: validated.talent,
+      })
       .select("id, created_at")
       .single();
 
