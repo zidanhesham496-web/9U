@@ -144,6 +144,7 @@ export function RegistrationForm() {
             label="الفرقة"
             name="grade"
             required
+            placeholder="فرقة"
             options={[
               { label: "أولى", value: "first" },
               { label: "تانية", value: "second" },

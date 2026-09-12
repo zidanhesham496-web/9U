@@ -9,9 +9,10 @@ type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
   options: SelectOption[];
   error?: string;
+  placeholder?: string;
 };
 
-export function Select({ label, id, name, options, error, ...props }: SelectProps) {
+export function Select({ label, id, name, options, error, placeholder = "اختر موهبتك", ...props }: SelectProps) {
   const selectId = id ?? name;
   const errorId = `${selectId}-error`;
 
@@ -29,7 +30,7 @@ export function Select({ label, id, name, options, error, ...props }: SelectProp
         aria-invalid={Boolean(error)}
         {...props}
       >
-        <option value="">اختر موهبتك</option>
+        <option value="">{placeholder}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
