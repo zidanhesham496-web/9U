@@ -14,7 +14,7 @@ type SortOption = "newest" | "oldest" | "name";
 const talentLabels: Record<string, string> = {
   singing: "غناء",
   acting: "تمثيل",
-  performance: "أداء",
+  performance: "استعراض",
   "script-writing": "كتابة سيناريو",
   "poetry-writing": "كتابة شعر",
   "poetry-recitation": "إلقاء شعر",
@@ -195,6 +195,7 @@ export function AdminDashboard() {
                 <tr>
                   <th scope="col">الاسم</th>
                   <th scope="col">الرقم القومي</th>
+                  <th scope="col">الفرقة</th>
                   <th scope="col">الكلية أو التخصص</th>
                   <th scope="col">رقم الهاتف</th>
                   <th scope="col">الموهبة</th>
@@ -206,6 +207,7 @@ export function AdminDashboard() {
                   <tr key={registration.id}>
                     <td data-label="الاسم">{registration.name}</td>
                     <td data-label="الرقم القومي">{registration.nationalId}</td>
+                    <td data-label="الفرقة">{registration.grade}</td>
                     <td data-label="الكلية أو التخصص">{registration.college}</td>
                     <td data-label="رقم الهاتف">{registration.phone}</td>
                     <td data-label="الموهبة"><span className="talent-pill">{getTalentLabel(registration.talent)}</span></td>

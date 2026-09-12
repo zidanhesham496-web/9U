@@ -1,11 +1,11 @@
 import type { RegistrationRecord } from "@/services/registrationService";
 
-const exportHeaders = ["Name", "National ID", "College", "Phone", "Talent", "Registration Time"];
+const exportHeaders = ["Name", "National ID", "Grade", "College", "Phone", "Talent", "Registration Time"];
 
 const talentLabels: Record<string, string> = {
   singing: "Singing",
   acting: "Acting",
-  performance: "Performance",
+  performance: "Exhibition",
   "script-writing": "Script Writing",
   "poetry-writing": "Poetry Writing",
   "poetry-recitation": "Poetry Recitation",
@@ -26,6 +26,7 @@ export function createRegistrationsCsv(records: RegistrationRecord[]) {
   const rows = records.map((record) => [
     record.name,
     record.nationalId,
+    record.grade,
     record.college,
     record.phone,
     talentLabels[record.talent] ?? record.talent,

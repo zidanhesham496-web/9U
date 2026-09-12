@@ -8,6 +8,7 @@ export type Database = {
           id: string;
           name: string;
           national_id: string;
+          grade: string;
           college: string;
           phone: string;
           talent: string;
@@ -17,6 +18,7 @@ export type Database = {
           id?: string;
           name: string;
           national_id: string;
+          grade: string;
           college: string;
           phone: string;
           talent: string;
@@ -26,6 +28,7 @@ export type Database = {
           id: string;
           name: string;
           national_id: string;
+          grade: string;
           college: string;
           phone: string;
           talent: string;

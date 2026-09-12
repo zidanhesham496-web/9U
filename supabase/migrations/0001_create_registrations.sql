@@ -2,6 +2,7 @@ create table if not exists public.registrations (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   national_id text not null,
+  grade text,
   college text not null,
   phone text not null,
   talent text not null,

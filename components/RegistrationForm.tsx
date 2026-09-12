@@ -10,6 +10,7 @@ import { registerTalent } from "@/services/registrationService";
 type FormValues = {
   fullName: string;
   nationalId: string;
+  grade: string;
   college: string;
   phone: string;
   talent: string;
@@ -20,7 +21,7 @@ type FormErrors = Partial<Record<keyof FormValues, string>>;
 const talentOptions: SelectOption[] = [
   { label: "غناء", value: "singing" },
   { label: "تمثيل", value: "acting" },
-  { label: "أداء", value: "performance" },
+  { label: "استعراض", value: "performance" },
   { label: "كتابة سيناريو", value: "script-writing" },
   { label: "كتابة شعر", value: "poetry-writing" },
   { label: "إلقاء شعر", value: "poetry-recitation" },
@@ -29,6 +30,7 @@ const talentOptions: SelectOption[] = [
 const initialValues: FormValues = {
   fullName: "",
   nationalId: "",
+  grade: "",
   college: "",
   phone: "",
   talent: "",
@@ -46,6 +48,10 @@ function validate(values: FormValues): FormErrors {
     errors.nationalId = "يرجى إدخال الرقم القومي.";
   } else if (!/^[23][0-9]{13}$/.test(values.nationalId.trim())) {
     errors.nationalId = "يرجى إدخال رقم قومي صحيح مكون من 14 رقمًا.";
+  }
+
+  if (!values.grade) {
+    errors.grade = "يرجى اختيار الفرقة.";
   }
 
   if (!values.college.trim()) {
@@ -91,6 +97,7 @@ export function RegistrationForm() {
         await registerTalent({
           name: values.fullName,
           nationalId: values.nationalId,
+          grade: values.grade,
           college: values.college,
           phone: values.phone,
           talent: values.talent,
@@ -132,6 +139,21 @@ export function RegistrationForm() {
             value={values.nationalId}
             error={errors.nationalId}
             onChange={(event) => updateField("nationalId", event.target.value)}
+          />
+          <Select
+            label="الفرقة"
+            name="grade"
+            required
+            options={[
+              { label: "أولى", value: "first" },
+              { label: "تانية", value: "second" },
+              { label: "تالتة", value: "third" },
+              { label: "رابعة", value: "fourth" },
+              { label: "خامسة", value: "fifth" },
+            ]}
+            value={values.grade}
+            error={errors.grade}
+            onChange={(event) => updateField("grade", event.target.value)}
           />
           <Input
             label="الكلية أو التخصص"

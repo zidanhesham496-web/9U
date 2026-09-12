@@ -6,6 +6,9 @@
   color-scheme: dark;
   --navy-950: #050b16;
   --navy-900: #081322;
+  --navy-800: #0d1b32;
+  --blue-electric: #4f9dff;
+  --violet-electric: #8064ff;
   --ivory-50: #f7f8f5;
   --ivory-300: #aeb8ba;
 }
@@ -27,14 +30,41 @@ body {
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: 1.25rem;
-  background: var(--navy-950);
+  padding: 6.25rem 1rem 2rem;
+  background: radial-gradient(ellipse at 50% 46%, #101d37 0%, var(--navy-950) 64%);
+}
+
+.brand-logos {
+  position: absolute;
+  top: 1.25rem;
+  right: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  direction: ltr;
+  pointer-events: none;
+}
+
+.brand-logo {
+  position: relative;
+  width: clamp(4.4rem, 9vw, 6.8rem);
+  aspect-ratio: 1;
+  overflow: hidden;
+  filter: drop-shadow(0 0 1rem rgba(88, 145, 255, 0.24));
+}
+
+.brand-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .profile-button {
   position: absolute;
-  top: 1.25rem;
   right: 1.25rem;
+  bottom: 1.25rem;
   z-index: 2;
   display: grid;
   width: 2.8rem;
@@ -225,11 +255,11 @@ body {
   z-index: 1;
   display: grid;
   justify-items: center;
-  width: min(100%, 28rem);
+  width: min(100%, 29rem);
 }
 
 .registration-card {
-  padding: 1.1rem 1.15rem 1.2rem;
+  padding: 1.6rem 1.25rem 1.35rem;
 }
 
 .card-brand {
@@ -532,14 +562,14 @@ html[dir="rtl"] .field-select {
 
 .glass-card {
   padding: 1.5rem;
-  border: 1px solid rgba(214, 226, 228, 0.14);
-  border-radius: 1.25rem;
+  border: 1px solid rgba(176, 205, 255, 0.2);
+  border-radius: 1.35rem;
   background: linear-gradient(
     135deg,
-    rgba(24, 48, 72, 0.58),
-    rgba(8, 19, 34, 0.72)
+    rgba(25, 47, 84, 0.58),
+    rgba(7, 15, 31, 0.78)
   );
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34), 0 8px 24px rgba(2, 10, 23, 0.24);
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.48), 0 0 3rem rgba(64, 115, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
@@ -555,25 +585,24 @@ html[dir="rtl"] .field-select {
 }
 
 .form-intro {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.55rem;
+  text-align: center;
 }
 
 .form-intro h1 {
-  max-width: 34rem;
-  margin: 1.25rem 0 0.75rem;
-  color: var(--ivory-50);
-  font-size: clamp(2.25rem, 8vw, 4rem);
-  font-weight: 500;
+  margin: 0.45rem 0 0.3rem;
+  color: #dbe8ff;
+  font-size: clamp(1.7rem, 5vw, 2.25rem);
+  font-weight: 600;
   letter-spacing: 0;
-  line-height: 1.02;
+  line-height: 1.2;
 }
 
 .form-intro p:last-child {
-  max-width: 30rem;
   margin: 0;
-  color: var(--ivory-300);
-  font-size: 0.95rem;
-  line-height: 1.7;
+  color: #72a9eb;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .registration-form {
@@ -685,10 +714,10 @@ html[dir="rtl"] .field-select {
   width: 100%;
   min-height: 3.25rem;
   padding: 0.8rem 1rem;
-  border: 1px solid rgba(214, 226, 228, 0.16);
-  border-radius: 0.7rem;
+  border: 1px solid rgba(170, 199, 242, 0.16);
+  border-radius: 0.8rem;
   outline: none;
-  background: rgba(4, 13, 26, 0.44);
+  background: rgba(3, 10, 24, 0.58);
   color: var(--ivory-50);
   font: inherit;
   font-size: 0.95rem;
@@ -751,11 +780,11 @@ html[dir="rtl"] .field-select {
   width: 100%;
   min-height: 3.25rem;
   padding: 0.8rem 1rem 0.8rem 1.25rem;
-  border: 1px solid rgba(247, 248, 245, 0.18);
-  border-radius: 0.7rem;
+  border: 1px solid rgba(145, 190, 255, 0.5);
+  border-radius: 0.8rem;
   cursor: pointer;
-  background: var(--ivory-50);
-  color: var(--navy-950);
+  background: linear-gradient(105deg, #3f82f7, #6b61e8);
+  color: #f5f8ff;
   font: inherit;
   font-size: 0.88rem;
   font-weight: 800;
@@ -764,8 +793,8 @@ html[dir="rtl"] .field-select {
 }
 
 .primary-button:hover {
-  background: #ffffff;
-  box-shadow: 0 12px 30px rgba(211, 229, 231, 0.14);
+  background: linear-gradient(105deg, #5595ff, #8074f5);
+  box-shadow: 0 12px 30px rgba(70, 121, 255, 0.28);
   transform: translateY(-2px);
 }
 
@@ -790,7 +819,7 @@ html[dir="rtl"] .field-select {
   height: 1.8rem;
   place-items: center;
   border-radius: 999px;
-  background: var(--navy-950);
+  background: rgba(4, 13, 30, 0.42);
   color: var(--ivory-50);
   font-size: 1rem;
   transition: transform 180ms ease;
@@ -811,10 +840,24 @@ html[dir="rtl"] .field-select {
 .background-effects::before {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 45%, rgba(22, 55, 84, 0.3), transparent 52%),
+  background: radial-gradient(circle at 50% 45%, rgba(22, 55, 84, 0.35), transparent 52%),
     radial-gradient(circle at 12% 18%, rgba(74, 42, 142, 0.1), transparent 30%),
     radial-gradient(circle at 88% 78%, rgba(48, 145, 177, 0.08), transparent 28%);
   content: "";
+}
+
+.background-effects::after {
+  position: absolute;
+  top: 48%;
+  left: -10%;
+  width: 120%;
+  height: 34%;
+  border-top: 1px solid rgba(95, 150, 255, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 -2rem 3rem rgba(71, 93, 233, 0.08), 0 2rem 3rem rgba(45, 137, 255, 0.08);
+  filter: blur(1px);
+  content: "";
+  transform: rotate(-8deg) skewY(-5deg);
 }
 
 .background-grid {
@@ -893,6 +936,139 @@ html[dir="rtl"] .field-select {
   filter: blur(24px);
   opacity: 0.26;
   animation: atmospheric-drift-six 52s ease-in-out -31s infinite;
+}
+
+.background-particle {
+  position: absolute;
+  display: block;
+  width: 0.35rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #83c7ff;
+  box-shadow: 0 0 0.6rem #4d8dff, 0 0 1.8rem rgba(116, 95, 255, 0.7);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.background-particle-one {
+  top: 26%;
+  left: 20%;
+  animation: particle-drift-one 18s ease-in-out infinite;
+}
+
+.background-particle-two {
+  top: 62%;
+  left: 36%;
+  width: 0.25rem;
+  animation: particle-drift-two 23s ease-in-out -8s infinite;
+}
+
+.background-particle-three {
+  top: 34%;
+  right: 24%;
+  width: 0.28rem;
+  background: #b18cff;
+  animation: particle-drift-three 21s ease-in-out -5s infinite;
+}
+
+.background-particle-four {
+  right: 14%;
+  bottom: 26%;
+  width: 0.22rem;
+  animation: particle-drift-four 26s ease-in-out -14s infinite;
+}
+
+.background-particle-five {
+  bottom: 18%;
+  left: 27%;
+  width: 0.26rem;
+  background: #a391ff;
+  animation: particle-drift-five 24s ease-in-out -11s infinite;
+}
+
+@keyframes particle-drift-one {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0) scale(0.7);
+  }
+
+  35%,
+  65% {
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translate3d(3rem, -4rem, 0) scale(1);
+  }
+}
+
+@keyframes particle-drift-two {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  65% {
+    opacity: 0.52;
+  }
+
+  50% {
+    transform: translate3d(-2rem, -3rem, 0);
+  }
+}
+
+@keyframes particle-drift-three {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+
+  35%,
+  68% {
+    opacity: 0.62;
+  }
+
+  52% {
+    transform: translate3d(-3rem, 2rem, 0) scale(1);
+  }
+}
+
+@keyframes particle-drift-four {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  64% {
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate3d(-2rem, -2rem, 0);
+  }
+}
+
+@keyframes particle-drift-five {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+
+  36%,
+  66% {
+    opacity: 0.58;
+  }
+
+  50% {
+    transform: translate3d(2rem, -3rem, 0) scale(1);
+  }
 }
 
 @keyframes atmospheric-drift-one {
@@ -989,7 +1165,7 @@ html[dir="rtl"] .field-select {
 
 @media (min-width: 640px) {
   .page-shell {
-    padding: 2rem;
+    padding: 5.5rem 2rem 2rem;
   }
 
   .admin-shell {
@@ -1002,11 +1178,26 @@ html[dir="rtl"] .field-select {
   }
 
   .registration-card {
-    padding: 1.5rem 1.6rem 1.65rem;
+    padding: 1.7rem 1.8rem 1.8rem;
   }
 }
 
 @media (max-width: 639px) {
+  .brand-logos {
+    top: 0.85rem;
+    right: 0.7rem;
+    left: 0.7rem;
+  }
+
+  .brand-logo {
+    transform: scale(0.82);
+    transform-origin: top center;
+  }
+
+  .page-shell {
+    padding-top: 5.25rem;
+  }
+
   .admin-header {
     align-items: stretch;
     flex-direction: column;

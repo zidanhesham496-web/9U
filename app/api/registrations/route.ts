@@ -7,6 +7,7 @@ export const runtime = "nodejs";
 type RegistrationBody = {
   name?: unknown;
   nationalId?: unknown;
+  grade?: unknown;
   college?: unknown;
   phone?: unknown;
   talent?: unknown;
@@ -21,9 +22,12 @@ const allowedTalents = new Set([
   "poetry-recitation",
 ]);
 
+const allowedGrades = new Set(["first", "second", "third", "fourth", "fifth"]);
+
 function validateBody(body: RegistrationBody) {
   const name = typeof body.name === "string" ? body.name.trim() : "";
   const nationalId = typeof body.nationalId === "string" ? body.nationalId.trim() : "";
+  const grade = typeof body.grade === "string" ? body.grade : "";
   const college = typeof body.college === "string" ? body.college.trim() : "";
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const talent = typeof body.talent === "string" ? body.talent : "";
@@ -34,6 +38,7 @@ function validateBody(body: RegistrationBody) {
     name.length > 120 ||
     !nationalId ||
     !/^[23][0-9]{13}$/.test(nationalId) ||
+    !allowedGrades.has(grade) ||
     !college ||
     college.length > 160 ||
     !talent ||
@@ -46,7 +51,7 @@ function validateBody(body: RegistrationBody) {
     return null;
   }
 
-  return { name, national_id: nationalId, college, phone, talent };
+  return { name, national_id: nationalId, grade, college, phone, talent };
 }
 
 export async function POST(request: Request) {
@@ -61,6 +66,7 @@ export async function POST(request: Request) {
       .insert({
         name: validated.name,
         national_id: validated.national_id,
+        grade: validated.grade,
         college: validated.college,
         phone: validated.phone,
         talent: validated.talent,
@@ -88,7 +94,7 @@ export async function GET(request: Request) {
   try {
     const { data, error } = await getSupabaseAdmin()
       .from("registrations")
-      .select("id, name, national_id, college, phone, talent, created_at")
+      .select("id, name, national_id, grade, college, phone, talent, created_at")
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -101,6 +107,7 @@ export async function GET(request: Request) {
         id: row.id,
         name: row.name,
         nationalId: row.national_id,
+        grade: row.grade,
         college: row.college,
         phone: row.phone,
         talent: row.talent,

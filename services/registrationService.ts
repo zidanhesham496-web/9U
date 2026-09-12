@@ -2,6 +2,7 @@ export type RegistrationRecord = {
   id: string;
   name: string;
   nationalId: string;
+  grade: string;
   college: string;
   phone: string;
   talent: string;
