@@ -385,6 +385,36 @@ html[dir="rtl"] .field-select {
   color: var(--ivory-100);
 }
 
+.admin-delete {
+  min-width: 3.8rem;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(232, 171, 171, 0.32);
+  border-radius: 0.55rem;
+  cursor: pointer;
+  background: rgba(116, 36, 51, 0.18);
+  color: #f0b8bd;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.admin-delete:hover {
+  border-color: rgba(242, 157, 167, 0.7);
+  background: rgba(140, 42, 58, 0.32);
+  transform: translateY(-1px);
+}
+
+.admin-delete:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.admin-delete:focus-visible {
+  outline: 3px solid rgba(232, 171, 171, 0.5);
+  outline-offset: 3px;
+}
+
 .admin-total {
   display: grid;
   flex: 0 0 auto;

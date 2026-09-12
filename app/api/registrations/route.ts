@@ -119,3 +119,28 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unable to load registrations" }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  if (!(await hasValidAdminSession(request))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const id = new URL(request.url).searchParams.get("id")?.trim() ?? "";
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) {
+    return NextResponse.json({ error: "Invalid registration id" }, { status: 400 });
+  }
+
+  try {
+    const { error } = await getSupabaseAdmin().from("registrations").delete().eq("id", id);
+
+    if (error) {
+      console.error("Failed to delete registration", error.message);
+      return NextResponse.json({ error: "Unable to delete registration" }, { status: 500 });
+    }
+
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    console.error("Failed to delete registration", error instanceof Error ? error.message : "Unknown error");
+    return NextResponse.json({ error: "Unable to delete registration" }, { status: 500 });
+  }
+}

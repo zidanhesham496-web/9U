@@ -5,6 +5,7 @@ import { BackgroundEffects } from "@/components/BackgroundEffects";
 import { GlassCard } from "@/components/GlassCard";
 import { downloadRegistrationsCsv } from "@/services/exportService";
 import {
+  deleteRegistration,
   getAllRegistrations,
   RegistrationRecord,
 } from "@/services/registrationService";
@@ -43,6 +44,8 @@ export function AdminDashboard() {
   const [sortOption, setSortOption] = useState<SortOption>("newest");
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -105,6 +108,24 @@ export function AdminDashboard() {
 
   function handlePrint() {
     window.print();
+  }
+
+  async function handleDelete(registration: RegistrationRecord) {
+    if (!window.confirm(`هل أنت متأكد من حذف تسجيل ${registration.name}؟`)) {
+      return;
+    }
+
+    setDeletingId(registration.id);
+    setDeleteError("");
+
+    try {
+      await deleteRegistration(registration.id);
+      setRegistrations((current) => current.filter((item) => item.id !== registration.id));
+    } catch {
+      setDeleteError("تعذر حذف التسجيل. يرجى المحاولة مرة أخرى.");
+    } finally {
+      setDeletingId(null);
+    }
   }
 
   return (
@@ -178,6 +199,7 @@ export function AdminDashboard() {
 
         {isLoading && <div className="admin-feedback">جارٍ تحميل التسجيلات...</div>}
         {!isLoading && loadError && <div className="admin-feedback admin-feedback-error">{loadError}</div>}
+        {deleteError && <div className="admin-feedback admin-feedback-error">{deleteError}</div>}
         {!isLoading && !loadError && registrations.length === 0 && (
           <div className="admin-empty">
             <span className="admin-empty-mark" aria-hidden="true">○</span>
@@ -200,6 +222,7 @@ export function AdminDashboard() {
                   <th scope="col">رقم الهاتف</th>
                   <th scope="col">الموهبة</th>
                   <th scope="col">وقت التسجيل</th>
+                  <th scope="col">إجراء</th>
                 </tr>
               </thead>
               <tbody>
@@ -212,6 +235,16 @@ export function AdminDashboard() {
                     <td data-label="رقم الهاتف">{registration.phone}</td>
                     <td data-label="الموهبة"><span className="talent-pill">{getTalentLabel(registration.talent)}</span></td>
                     <td data-label="وقت التسجيل">{formatRegistrationTime(registration.createdAt)}</td>
+                    <td data-label="إجراء">
+                      <button
+                        className="admin-delete"
+                        type="button"
+                        disabled={deletingId === registration.id}
+                        onClick={() => void handleDelete(registration)}
+                      >
+                        {deletingId === registration.id ? "جارٍ الحذف..." : "حذف"}
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

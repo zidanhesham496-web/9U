@@ -41,3 +41,14 @@ export async function getAllRegistrations(): Promise<RegistrationRecord[]> {
 
   return (await response.json()) as RegistrationRecord[];
 }
+
+export async function deleteRegistration(id: string): Promise<void> {
+  const response = await fetch(`${getApiUrl("/api/registrations")}?id=${encodeURIComponent(id)}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Registration deletion failed");
+  }
+}
